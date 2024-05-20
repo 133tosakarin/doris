@@ -202,6 +202,7 @@ suite("test_tvf_based_broker_load_p2", "p2") {
                         set_value, where_expr, line_delimiter ->
         String columns_str = ("$columns" != "") ? "($columns)" : "";
         String compress_type = "compress_type as '${parse_compress_type(path)}'"
+
         String line_term = ("$line_delimiter" != "") ? "lines terminated by '$line_delimiter'" : "";
 
         String column_separator = ("$line_term" != "UNKNOWN") ? "columns terminated by '|'" : "columns terminated by ','";
@@ -233,6 +234,7 @@ suite("test_tvf_based_broker_load_p2", "p2") {
                 "AWS_ENDPOINT" = "cos.ap-beijing.myqcloud.com",
                 "AWS_REGION" = "ap-beijing",
                 "provider" = "${getS3Provider()}"
+
             )
             """
         logger.info("Submit load with lable: $uuid, table: $table, path: $path")
@@ -266,6 +268,7 @@ suite("test_tvf_based_broker_load_p2", "p2") {
                     String[][] result = sql """ show load where label="$label" order by createtime desc limit 1; """
                     if (result[0][2].equals("FINISHED")) {
                         
+
                         assertTrue(result[0][6].contains(task_info[0]))
                         // assertTrue(etl_info[0] == result[0][5], "expected: " + etl_info[0] + ", actual: " + result[0][5] + ", label: $label")
                         break;
@@ -294,6 +297,7 @@ suite("test_tvf_based_broker_load_p2", "p2") {
                     assertTrue("$orc_actual_result" == "$orc_expect_result")
                 }
             }
+
 
 
             order_qt_parquet_s3_case1 """select count(*) from parquet_s3_case1 where col1=10"""
