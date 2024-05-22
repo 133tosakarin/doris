@@ -256,6 +256,7 @@ suite("test_tvf_based_broker_load_p2", "p2") {
                 sql new File("""${context.file.parent}/ddl/${table}_create.sql""").text
                 def uuid = UUID.randomUUID().toString().replace("-", "0")
                 uuids.add(uuid)
+                logger.info("\n$i, ${paths[i]}, $table, ${columns_list[i]}, ${column_in_paths[i]}, ${preceding_filters[i]}, ${set_values[i]}, ${where_exprs[i]}, ${line_delimiters[i]}")
                 do_load_job.call(uuid, paths[i], table, columns_list[i], column_in_paths[i], preceding_filters[i],
                         set_values[i], where_exprs[i], line_delimiters[i])
                 i++
@@ -306,6 +307,7 @@ suite("test_tvf_based_broker_load_p2", "p2") {
             order_qt_parquet_s3_case7 """select count(*) from parquet_s3_case7 where col4=4"""
             order_qt_parquet_s3_case8 """ select count(*) from parquet_s3_case8 where p_partkey=1"""
             // order_qt_parquet_s3_case9 """ select * from parquet_s3_case9""" // we ignore this table temporarily due to complex field type
+
 
         } finally {
             for (String table in tables) {
