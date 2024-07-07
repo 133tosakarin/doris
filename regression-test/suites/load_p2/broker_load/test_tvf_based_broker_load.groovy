@@ -231,8 +231,7 @@ suite("test_tvf_based_broker_load_p2", "p2") {
                 "AWS_ACCESS_KEY" = "$ak",
                 "AWS_SECRET_KEY" = "$sk",
                 "AWS_ENDPOINT" = "cos.ap-beijing.myqcloud.com",
-                "AWS_REGION" = "ap-beijing",
-                "provider" = "${getS3Provider()}"
+                "AWS_REGION" = "ap-beijing"
 
             )
             """
@@ -266,7 +265,6 @@ suite("test_tvf_based_broker_load_p2", "p2") {
                 while (max_try_milli_secs > 0) {
                     String[][] result = sql """ show load where label="$label" order by createtime desc limit 1; """
                     if (result[0][2].equals("FINISHED")) {
-                        
                         assertTrue(result[0][6].contains(task_info[0]))
                         // assertTrue(etl_info[0] == result[0][5], "expected: " + etl_info[0] + ", actual: " + result[0][5] + ", label: $label")
                         break;
